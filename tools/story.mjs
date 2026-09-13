@@ -11,7 +11,6 @@ import { fileURLToPath } from 'node:url';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const MARK = '<!-- stories:start -->';
 const FONTS = 'https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap';
-const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const USAGE = `Usage:
   node tools/story.mjs words <text.txt> [--title "…"]
   node tools/story.mjs build <text.txt> <dict.json> [--title "…"] [--slug …] [--lines]`;
@@ -122,12 +121,7 @@ function today() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-function humanDate(iso) {
-  const [y, m, d] = iso.split('-').map(Number);
-  return `${d} ${MONTHS[m - 1]} ${y}`;
-}
-
-function page(title, meta, paras, dict) {
+function page(title, paras, dict) {
   const entries = Object.keys(dict).sort().map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(dict[k])}`);
   const json = `{\n${entries.join(',\n')}\n}`.replace(/</g, '\\u003c');
   const body = paras.map((p) => `<p>${esc(p).replace(/\n/g, '<br>\n')}</p>`).join('\n');
@@ -148,7 +142,6 @@ function page(title, meta, paras, dict) {
 <main class="wrap">
 <nav class="topbar"><a href="../">← Stories</a></nav>
 <h1 class="story-title" data-words>${esc(title)}</h1>
-<p class="meta">${meta}</p>
 <article data-words>
 ${body}
 </article>
@@ -191,12 +184,11 @@ function build(file, dictFile, opts) {
   const old = index.match(itemRe);
   // A rebuilt story keeps its original date and its place in the list.
   const iso = old?.[0].match(/data-date="(\d{4}-\d\d-\d\d)"/)?.[1] ?? today();
-  const meta = `${humanDate(iso)} · ${total.toLocaleString('en-US')} words`;
-  const item = `    <li data-slug="${slug}" data-date="${iso}"><a href="texts/${slug}.html"><span class="t">${esc(title)}</span><span class="m">${meta}</span></a></li>\n`;
+  const item = `    <li data-slug="${slug}" data-date="${iso}"><a href="texts/${slug}.html"><span class="t">${esc(title)}</span></a></li>\n`;
   index = old ? index.replace(itemRe, () => item) : index.replace(`${MARK}\n`, () => `${MARK}\n${item}`);
 
   mkdirSync(join(ROOT, 'texts'), { recursive: true });
-  writeFileSync(join(ROOT, 'texts', `${slug}.html`), page(title, meta, paras, dict));
+  writeFileSync(join(ROOT, 'texts', `${slug}.html`), page(title, paras, dict));
   writeFileSync(indexPath, index);
 
   const names = forms.filter((f) => f.name).map((f) => f.raw);
