@@ -105,7 +105,7 @@ a { color: var(--accent); }
   text-wrap: balance;
 }
 article { font-size: 1.1em; }
-article p { margin: 0 0 1.1em; text-wrap: pretty; hanging-punctuation: first; }
+article p { margin: 0 0 1.1em; hanging-punctuation: first; }
 
 /* Tappable words and the translation popup */
 
