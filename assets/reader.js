@@ -44,6 +44,16 @@
     node.parentNode.replaceChild(frag, node);
   }
 
+  var FONT_STEP = .1, FONT_MIN = .8, FONT_MAX = 1.6;
+  var fontScale = parseFloat(localStorage.getItem('fontScale')) || 1;
+  document.querySelectorAll('.fontctl-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      fontScale = Math.min(FONT_MAX, Math.max(FONT_MIN, fontScale + parseFloat(btn.dataset.font) * FONT_STEP));
+      document.documentElement.style.fontSize = (fontScale * 100) + '%';
+      try { localStorage.setItem('fontScale', fontScale.toFixed(2)); } catch (e) {}
+    });
+  });
+
   document.querySelectorAll('[data-words]').forEach(function (root) {
     var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     var nodes = [];

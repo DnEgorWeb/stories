@@ -92,8 +92,27 @@ a { color: var(--accent); }
 
 /* Story */
 
-.topbar { padding-top: max(1rem, env(safe-area-inset-top)); font: .9rem/1.4 var(--sans); }
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: max(1rem, env(safe-area-inset-top));
+  font: .9rem/1.4 var(--sans);
+}
 .topbar a { display: inline-block; padding: .5rem 0; color: var(--muted); text-decoration: none; }
+
+.fontctl { display: flex; gap: .25rem; }
+.fontctl-btn {
+  min-width: 2rem;
+  padding: .5rem .25rem;
+  border: none;
+  background: none;
+  color: var(--muted);
+  font: 600 .95rem/1 var(--sans);
+  cursor: pointer;
+}
+.fontctl-btn:active { color: var(--accent); }
+@media (hover: hover) { .fontctl-btn:hover { color: var(--accent); } }
 
 .story-title {
   margin: 1.5rem 0 2rem;

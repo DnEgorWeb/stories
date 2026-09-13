@@ -137,10 +137,11 @@ function page(title, paras, dict) {
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="${FONTS}">
 <link rel="stylesheet" href="../assets/style.css">
+<script>try{var s=localStorage.getItem('fontScale');if(s)document.documentElement.style.fontSize=(parseFloat(s)*100)+'%'}catch(e){}</script>
 </head>
 <body>
 <main class="wrap">
-<nav class="topbar"><a href="../">← Stories</a></nav>
+<nav class="topbar"><a href="../">← Stories</a><div class="fontctl"><button type="button" class="fontctl-btn" data-font="-1" aria-label="Decrease font size">A−</button><button type="button" class="fontctl-btn" data-font="1" aria-label="Increase font size">A+</button></div></nav>
 <h1 class="story-title" data-words>${esc(title)}</h1>
 <article data-words>
 ${body}
