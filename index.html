@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Stories</title>
+<meta name="theme-color" content="#f8f4ec" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1b1a17" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&display=swap">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="site-head">
+    <h1>Stories</h1>
+    <p>Tap any word to see it in Russian</p>
+  </header>
+  <div class="search">
+    <input id="q" type="search" placeholder="Search stories" autocomplete="off" autocapitalize="off" spellcheck="false">
+  </div>
+  <ul class="list" id="list">
+    <!-- stories:start -->
+    <li data-slug="the-town-mouse-and-the-country-mouse" data-date="2026-09-13"><a href="texts/the-town-mouse-and-the-country-mouse.html"><span class="t">The Town Mouse and the Country Mouse</span><span class="m">13 Sep 2026 · 281 words</span></a></li>
+  </ul>
+  <p class="empty" id="empty" hidden></p>
+</main>
+<script>
+(function () {
+  var q = document.getElementById('q');
+  var empty = document.getElementById('empty');
+  var items = [].slice.call(document.querySelectorAll('#list li'));
+
+  function filter() {
+    var terms = q.value.toLowerCase().split(/\s+/).filter(Boolean);
+    var shown = 0;
+    items.forEach(function (li) {
+      var title = li.querySelector('.t').textContent.toLowerCase();
+      var match = terms.every(function (t) { return title.indexOf(t) !== -1; });
+      li.hidden = !match;
+      if (match) shown++;
+    });
+    empty.textContent = items.length ? 'Nothing found' : 'No stories yet';
+    empty.hidden = shown > 0;
+  }
+
+  q.addEventListener('input', filter);
+  filter();
+})();
+</script>
+</body>
+</html>
