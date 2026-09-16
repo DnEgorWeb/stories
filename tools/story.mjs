@@ -30,6 +30,9 @@ const SKIP = new Set(`
 
 const PRONOUN_I = /^i(?:'[a-z]+)?$/;
 
+// A paragraph of just asterisks ("***" or "* * *") is a section break, rendered as an ornamental <hr>.
+const SEP = /^\*(?:\s*\*){2,}$/;
+
 function fail(msg) {
   console.error(msg);
   process.exit(1);
@@ -124,7 +127,7 @@ function today() {
 function page(title, paras, dict) {
   const entries = Object.keys(dict).sort().map((k) => `  ${JSON.stringify(k)}: ${JSON.stringify(dict[k])}`);
   const json = `{\n${entries.join(',\n')}\n}`.replace(/</g, '\\u003c');
-  const body = paras.map((p) => `<p>${esc(p).replace(/\n/g, '<br>\n')}</p>`).join('\n');
+  const body = paras.map((p) => (SEP.test(p) ? '<hr class="sep">' : `<p>${esc(p).replace(/\n/g, '<br>\n')}</p>`)).join('\n');
   return `<!doctype html>
 <html lang="en">
 <head>

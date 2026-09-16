@@ -126,6 +126,28 @@ a { color: var(--accent); }
 article { font-size: 1.1em; }
 article p { margin: 0 0 1.1em; hanging-punctuation: first; }
 
+/* Section break: a rule with teardrop ends and a diamond cluster in the middle, drawn as a mask so it takes the theme color. */
+.sep {
+  width: min(70%, 20em);
+  height: .75em;
+  margin: 2.2em auto;
+  border: 0;
+  background: var(--muted);
+  --sep-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='12' viewBox='0 0 17 12'%3E%3Cpath d='M0 6Q6 1.4 12.4 1.4A4.6 4.6 0 0 1 12.4 10.6Q6 10.6 0 6Z'/%3E%3C/svg%3E");
+  --sep-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='12' viewBox='0 0 17 12'%3E%3Cpath d='M17 6Q11 1.4 4.6 1.4A4.6 4.6 0 0 0 4.6 10.6Q11 10.6 17 6Z'/%3E%3C/svg%3E");
+  --sep-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12' viewBox='0 0 36 12'%3E%3Cpath d='M0 6L5 2.5L10 6L5 9.5ZM10 6L18 0L26 6L18 12ZM26 6L31 2.5L36 6L31 9.5Z'/%3E%3C/svg%3E");
+  -webkit-mask:
+    var(--sep-l) left center / auto 100% no-repeat,
+    var(--sep-c) center / auto 100% no-repeat,
+    var(--sep-r) right center / auto 100% no-repeat,
+    linear-gradient(#000 0 0) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
+  mask:
+    var(--sep-l) left center / auto 100% no-repeat,
+    var(--sep-c) center / auto 100% no-repeat,
+    var(--sep-r) right center / auto 100% no-repeat,
+    linear-gradient(#000 0 0) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
+}
+
 /* Tappable words and the translation popup */
 
 .w { border-radius: .2em; cursor: pointer; transition: background-color .15s, box-shadow .15s; }
