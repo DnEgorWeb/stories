@@ -123,29 +123,52 @@ a { color: var(--accent); }
   text-align: center;
   text-wrap: balance;
 }
-article { font-size: 1.1em; }
+.story-note {
+  margin: -1.25rem 0 2rem;
+  color: var(--muted);
+  font-style: italic;
+  text-align: center;
+  text-wrap: balance;
+}
+article { font-size: 1.1em; counter-reset: sep; }
 article p { margin: 0 0 1.1em; hanging-punctuation: first; }
 
-/* Section break: a rule with teardrop ends and a diamond cluster in the middle, drawn as a mask so it takes the theme color. */
+/* Section break: a rule with teardrop ends and the break's number in the middle. The rule is drawn as a mask on
+   ::before so it takes the theme color; the number comes from the `sep` counter, which each article resets. */
 .sep {
+  display: grid;
+  place-items: center;
   width: min(70%, 20em);
-  height: .75em;
+  height: auto;
   margin: 2.2em auto;
   border: 0;
-  background: var(--muted);
+  color: var(--muted);
+  counter-increment: sep;
+}
+.sep::before,
+.sep::after { grid-area: 1 / 1; }
+.sep::before {
   --sep-l: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='12' viewBox='0 0 17 12'%3E%3Cpath d='M0 6Q6 1.4 12.4 1.4A4.6 4.6 0 0 1 12.4 10.6Q6 10.6 0 6Z'/%3E%3C/svg%3E");
   --sep-r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='17' height='12' viewBox='0 0 17 12'%3E%3Cpath d='M17 6Q11 1.4 4.6 1.4A4.6 4.6 0 0 0 4.6 10.6Q11 10.6 17 6Z'/%3E%3C/svg%3E");
-  --sep-c: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='36' height='12' viewBox='0 0 36 12'%3E%3Cpath d='M0 6L5 2.5L10 6L5 9.5ZM10 6L18 0L26 6L18 12ZM26 6L31 2.5L36 6L31 9.5Z'/%3E%3C/svg%3E");
+  --sep-line: linear-gradient(90deg, #000 calc(50% - 1.2em), transparent 0 calc(50% + 1.2em), #000 0);
+  content: "";
+  width: 100%;
+  height: .75em;
+  background: currentColor;
   -webkit-mask:
     var(--sep-l) left center / auto 100% no-repeat,
-    var(--sep-c) center / auto 100% no-repeat,
     var(--sep-r) right center / auto 100% no-repeat,
-    linear-gradient(#000 0 0) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
+    var(--sep-line) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
   mask:
     var(--sep-l) left center / auto 100% no-repeat,
-    var(--sep-c) center / auto 100% no-repeat,
     var(--sep-r) right center / auto 100% no-repeat,
-    linear-gradient(#000 0 0) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
+    var(--sep-line) center / calc(100% - 1.6em) max(1px, .075em) no-repeat;
+}
+.sep::after {
+  content: counter(sep);
+  font-size: .85em;
+  line-height: 1;
+  font-variant-numeric: lining-nums;
 }
 
 /* Tappable words and the translation popup */

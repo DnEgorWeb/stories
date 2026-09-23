@@ -11,7 +11,8 @@ It shows English texts where tapping a word pops up its Russian translation. No 
 ## Adding a story (the usual task)
 
 The user gives a text file. The first line is the title (otherwise pass `--title "…"`). Paragraphs are separated by blank lines.
-A paragraph that is only `***` (or `* * *`) becomes an ornamental section break (`<hr class="sep">`, styled in `style.css`).
+A paragraph that is only `***` (or `* * *`) becomes an ornamental section break (`<hr class="sep">`, styled in `style.css`;
+a CSS counter numbers the breaks in each article).
 When the user asks for breaks after certain paragraphs, add those marker paragraphs to the text before building. On an
 already generated page, insert `<hr class="sep">` lines between the `<p>` elements.
 
