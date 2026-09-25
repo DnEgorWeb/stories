@@ -38,3 +38,12 @@ already generated page, insert `<hr class="sep">` lines between the `<p>` elemen
    ```
 
 Don't commit the source text or `dict.json`, because the generated page contains both.
+
+## Plays
+
+The generator only writes plain `<p>`s, so a play script gets its markup after `build` (see
+`texts/amelia-armande-the-monkeys-paw.html`). Re-running `build` wipes that markup, so apply it again afterwards.
+- `<article class="play" data-words>`. Scene and cast headings are `<h2 class="act">`, and the blurb is `<p class="intro">`.
+- A spoken line is `<p class="voice-blue"><b class="who">Mr White:</b> …</p>`. The voices are `voice-blue`, `-red`,
+  `-green`, `-orange` and `-purple`, with light and dark values set in `style.css`.
+- A stage direction keeps the text color: `<p class="dir">(…)</p>` on its own, `<span class="dir">(…)</span>` inside a line.
