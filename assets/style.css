@@ -181,8 +181,8 @@ article p { margin: 0 0 1.1em; hanging-punctuation: first; }
   font-variant-numeric: lining-nums;
 }
 
-/* Plays: the page gives each character's lines a voice color; stage directions, standalone or inside a line,
-   keep the plain text color. */
+/* Plays: the page colors each character's name, in the cast list and before their lines, with a voice color.
+   The lines themselves and the italic stage directions keep the text color. */
 
 .play .act {
   margin: 2.2em 0 1em;
@@ -193,8 +193,6 @@ article p { margin: 0 0 1.1em; hanging-punctuation: first; }
 }
 .play .intro,
 .play .dir { font-style: italic; }
-.play .dir { color: var(--fg); }
-.play .who { font-weight: 600; }
 .play .cast { margin-bottom: .4em; }
 
 .voice-blue { color: var(--voice-blue); }
